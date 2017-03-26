@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:H="http://java.sun.com/jsf/html">
+
+<h:head>
+</h:head>
+
+<h:body>
+   <f:facet name="last">
+      <h:outputStylesheet library="css" name="mystyle.css"/>
+   </f:facet>
+   <h:form id="form1" >
+      <div id="content">
+         <h:panelGrid columns="1" styleClass="foo" >
+
+            <h:graphicImage value="/images/vainmeta.png"/>
+
+            <h:panelGrid  columns="4">
+               <h:panelGrid>
+                  <h:commandButton value="FOUR columns" update=":form1:pool" immediate="true" >
+                     <f:setPropertyActionListener target="#{theBean.numColumns}" value="4" />
+                  </h:commandButton>
+                  <h:commandButton value="FIVE columns" update=":form1:pool" immediate="true" >
+                     <f:setPropertyActionListener target="#{theBean.numColumns}" value="5" />
+                  </h:commandButton>
+               </h:panelGrid>
+               <h:commandButton value="R E S E T" immediate="true" action="#{theBean.reset}"
+                                update=":form1:blueside, :form1:redside, :form1:pool"/>
+               <H:commandButton value="U N D O" immediate="true" action="#{theBean.backMeUp}"
+                                update=":form1:blueside, :form1:redside, :form1:pool"/>
+               <h:commandButton value="DOUBLE BANS" immediate="true" action="#{theBean.reset}"
+                                rendered="#{theBean.numBans eq 1}"
+                                update=":form1:blueside, :form1:redside, :form1:pool">
+                  <f:setPropertyActionListener target="#{theBean.numBans}" value="2" />
+               </h:commandButton>
+               <h:commandButton value="SINGLE BAN" immediate="true" action="#{theBean.reset}"
+                                rendered="#{theBean.numBans eq 2}"
+                                update=":form1:blueside, :form1:redside, :form1:pool">
+                  <f:setPropertyActionListener target="#{theBean.numBans}" value="1" />
+               </h:commandButton>
+            </h:panelGrid>
+
+
+            <h:panelGrid columns="5"  width="810px"   >
+
+               <h:panelGrid columns="1" id="blueside" width="155px"  >
+
+                  <h:outputText value="#{theBean.blueOdd}" styleClass="blueoddtext"/>
+                  <h:graphicImage value="/images/#{theBean.blueBan}" styleClass="ban bluepick"/>
+                  <h:graphicImage value="/images/blueban.png" styleClass="strike" rendered="#{theBean.step gt 0}"/>
+                  <h:graphicImage value="/images/#{theBean.blue1}" styleClass="strike" rendered="#{theBean.step lt 1}"/>
+
+                  <h:graphicImage value="/images/#{theBean.blue1}" styleClass="blueplay nopick" rendered="#{theBean.step lt 2}"/>
+                  <h:graphicImage value="/images/#{theBean.blue1}" styleClass="blueplay bluepick" rendered="#{theBean.step gt 1}"/>
+
+
+                  <h:graphicImage value="/images/#{theBean.blueBan2}" styleClass="ban nopick banspace" rendered="#{theBean.numBans eq 2 and theBean.step lt 5}"/>
+                  <h:graphicImage value="/images/#{theBean.blueBan2}" styleClass="ban bluepick banspace" rendered="#{theBean.numBans eq 2 and theBean.step gt 4}"/>
+                  <h:graphicImage value="/images/orangeban.png" styleClass="strike strikespace" rendered="#{theBean.numBans eq 2 and theBean.step gt 5}"/>
+                  <h:graphicImage value="/images/#{theBean.blue2}" styleClass="strike strikespace" rendered="#{theBean.numBans eq 2 and theBean.step lt 6}"/>
+
+
+
+                  <h:graphicImage value="/images/#{theBean.blue2}" styleClass="blueplay nopick" rendered="#{theBean.numBans eq 1 and theBean.step lt 5}"/>
+                  <h:graphicImage value="/images/#{theBean.blue2}" styleClass="blueplay bluepick" rendered="#{theBean.numBans eq 1 and theBean.step gt 4}"/>
+                  <h:graphicImage value="/images/#{theBean.blue2}" styleClass="blueplay nopick playspace" rendered="#{theBean.numBans eq 2 and theBean.step lt 7}"/>
+                  <h:graphicImage value="/images/#{theBean.blue2}" styleClass="blueplay bluepick playspace" rendered="#{theBean.numBans eq 2 and theBean.step gt 6}"/>
+
+
+
+                  <h:graphicImage value="/images/#{theBean.blue3}" styleClass="blueplay nopick" rendered="#{theBean.numBans eq 1 and theBean.step lt 6}"/>
+                  <h:graphicImage value="/images/#{theBean.blue3}" styleClass="blueplay bluepick" rendered="#{theBean.numBans eq 1 and theBean.step gt 5}"/>
+                  <h:graphicImage value="/images/#{theBean.blue3}" styleClass="blueplay nopick playspace" rendered="#{theBean.numBans eq 2 and theBean.step lt 8}"/>
+                  <h:graphicImage value="/images/#{theBean.blue3}" styleClass="blueplay bluepick playspace" rendered="#{theBean.numBans eq 2 and theBean.step gt 7}"/>
+               </h:panelGrid>
+               <h:panelGrid width="25px"/>
+               <h:panelGrid columns="1" width="500px"   >
+                  <p:dataGrid var="hero" value="#{theBean.list}" columns="#{theBean.numColumns}" id="pool" styleClass="fixtable">
+                     <h:commandLink>
+                        <div style="height: 125px;">
+                           <p:graphicImage value="/images/#{hero.heroName}.gif"
+                                           styleClass="heropool heroselected"
+                                           rendered="#{hero.selected}"/>
+                           <p:graphicImage value="/images/#{hero.heroName}.gif"
+                                           styleClass="heropool "
+                                           rendered="#{!hero.selected}"/>
+
+                           <p:graphicImage value="/images/ProgressBar#{hero.priority}.png" styleClass="score"
+                                           rendered="#{!hero.selected}"/>
+
+                        </div>
+
+
+                        <f:param id="heroName" value="#{hero.heroName}"/>
+                        <p:ajax event="click" listener="#{theBean.pick}" update=":form1:blueside, :form1:redside, :form1:pool" >
+
+                        </p:ajax>
+                     </h:commandLink>
+                  </p:dataGrid>
+               </h:panelGrid>
+               <h:panelGrid width="25px"/>
+
+               <h:panelGrid columns="1" id="redside" width="155px">
+                  <h:outputText value="#{theBean.redOdd}" styleClass="redoddtext"/>
+                  <h:graphicImage value="/images/#{theBean.redBan}" styleClass="ban nopick" rendered="#{theBean.step lt 1}"/>
+                  <h:graphicImage value="/images/#{theBean.redBan}" styleClass="ban redpick" rendered="#{theBean.step gt 0}"/>
+                  <h:graphicImage value="/images/orangeban.png" styleClass="strike" rendered="#{theBean.step gt 1}"/>
+                  <h:graphicImage value="/images/#{theBean.red1}" styleClass="strike" rendered="#{theBean.step lt 2}"/>
+
+                  <h:graphicImage value="/images/#{theBean.red1}" styleClass="redplay nopick" rendered="#{theBean.step lt 3}"/>
+                  <h:graphicImage value="/images/#{theBean.red1}" styleClass="redplay redpick" rendered="#{theBean.step gt 2}"/>
+
+
+                  <h:graphicImage value="/images/#{theBean.redBan2}" styleClass="ban nopick banspace" rendered="#{theBean.numBans eq 2 and theBean.step lt 4}"/>
+                  <h:graphicImage value="/images/#{theBean.redBan2}" styleClass="ban redpick banspace" rendered="#{theBean.numBans eq 2 and theBean.step gt 3}"/>
+                  <h:graphicImage value="/images/orangeban.png" styleClass="strike strikespace" rendered="#{theBean.numBans eq 2 and theBean.step gt 4}"/>
+                  <h:graphicImage value="/images/#{theBean.red2}" styleClass="strike strikespace" rendered="#{theBean.numBans eq 2 and theBean.step lt 5}"/>
+
+
+                  <h:graphicImage value="/images/#{theBean.red2}" styleClass="redplay nopick" rendered="#{theBean.numBans eq 1 and theBean.step lt 4}"/>
+                  <h:graphicImage value="/images/#{theBean.red2}" styleClass="redplay redpick" rendered="#{theBean.numBans eq 1 and theBean.step gt 3}"/>
+                  <h:graphicImage value="/images/#{theBean.red2}" styleClass="redplay nopick playspace" rendered="#{theBean.numBans eq 2 and theBean.step lt 6}"/>
+                  <h:graphicImage value="/images/#{theBean.red2}" styleClass="redplay redpick playspace" rendered="#{theBean.numBans eq 2 and theBean.step gt 5}"/>
+
+                  <h:graphicImage value="/images/#{theBean.red3}" styleClass="redplay nopick" rendered="#{theBean.numBans eq 1 and theBean.step lt 7}"/>
+                  <h:graphicImage value="/images/#{theBean.red3}" styleClass="redplay redpick" rendered="#{theBean.numBans eq 1 and theBean.step gt 6}"/>
+                  <h:graphicImage value="/images/#{theBean.red3}" styleClass="redplay nopick playspace" rendered="#{theBean.numBans eq 2 and theBean.step lt 9}"/>
+                  <h:graphicImage value="/images/#{theBean.red3}" styleClass="redplay redpick playspace" rendered="#{theBean.numBans eq 2 and theBean.step gt 8}"/>
+               </h:panelGrid>
+            </h:panelGrid>
+
+            <h:outputLink value="mailto:vainglorymeta@gmail.com" >
+               <h:outputText value="vainglorymeta@gmail.com" style="color:white"/>
+            </h:outputLink>
+            <h:panelGrid>
+               <h:outputText value=" " style="color:white"/>
+            </h:panelGrid>
+            <h:panelGrid>
+               <h:outputText value=" " />
+            </h:panelGrid>
+         </h:panelGrid></div>
+   </h:form>
+</h:body>
+
+</html>

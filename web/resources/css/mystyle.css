@@ -1,0 +1,108 @@
+
+body{
+    background-color: black;
+}
+
+div#content {
+    background: linear-gradient( rgba(0, 0, 0,.75), rgba(0, 0, 0, .75) ), url(/images/stormqueen.jpg) no-repeat center center fixed;
+    background-color: #121212;
+}
+
+.foo td  {
+    vertical-align: top;
+    text-align: center;
+}
+
+table , tr {
+    border-spacing: 0px;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    border-spacing: 0px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+
+
+.ui-widget-content  {
+    border: 0px solid #a8a8a8;
+}
+.ui-datagrid-content.ui-widget-content  {
+    border: 0px solid #a8a8a8;
+    background: transparent;
+}
+
+.ui-datagrid-column {
+    padding: 0px;
+}
+
+
+
+
+.ban  {
+    width: 100px; height: auto;
+    z-index: 1;
+    position: relative;  top: 10px;
+}
+.banspace { top:-80px}
+.strike {
+    width: 100px; height: auto;
+    z-index: 2;
+    position: relative;  top: -94px;
+}
+.strikespace { top: -184px; }
+
+
+.nopick {
+    background-color: dimgray;
+}
+.bluepick {
+    background-color: cornflowerblue;
+}
+.redpick {
+    background-color: coral;
+}
+
+
+.blueplay {
+    width: 150px; height: auto; border-style: solid; border-color: cornflowerblue;
+    position: relative;  top: -80px;
+    margin-bottom:15px;
+}
+.redplay {
+    width: 150px; height: auto; border-style: solid; border-color: coral;
+    position: relative;  top: -80px;
+    margin-bottom:15px;
+}
+.playspace {top: -170px;}
+
+.blueoddtext {
+    color: cornflowerblue;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: large;
+}
+.redoddtext {
+    color: coral;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: large;
+}
+
+
+
+
+
+.heropool {
+    width: 120px; height: auto;
+}
+.heroselected {
+    filter: brightness(20%);
+}
+
+
+.score {
+    width: 120px; height: auto;
+    z-index: 2;
+    position: relative;  top: -127px;
+}
+
+
